@@ -64,7 +64,7 @@ char intToChar(int i){
     assert(i >= 0);
     return 48+i;
 }
-int charToint(char c){
+int charToInt(char c){
     int i = c-48;
     assert(i < 10);
     assert(i >= 0);
@@ -105,10 +105,10 @@ void casoBase(fator *F,fator *G,fator *H){
     assert(F->n == 2);
     assert(G->n == 2);
     assert(H->n == 4);
-    int a = charToint(F->V[1]); // encontrar 'a'
-    int b = charToint(F->V[0]); // encontrar 'b'
-    int c = charToint(G->V[1]); // encontrar 'c'
-    int d = charToint(G->V[0]); // encontrar 'd'
+    int a = charToInt(F->V[1]); // encontrar 'a'
+    int b = charToInt(F->V[0]); // encontrar 'b'
+    int c = charToInt(G->V[1]); // encontrar 'c'
+    int d = charToInt(G->V[0]); // encontrar 'd'
     int ac = a*c; // calcular 'ac'
     int bd = b*d; // calcular 'bd'
     int x = (a+b)*(c+d); // calcular 'x'
@@ -128,10 +128,10 @@ void casoBase2(fator *F,fator *G,fator *H){
     assert(F->n == 3);
     assert(G->n == 3);
     assert(H->n == 6);
-    int a = charToint(F->V[2]); // encontrar 'a'
-    int b = charToint(F->V[0])+charToint(F->V[1])*10; // encontrar 'b'
-    int c = charToint(G->V[2]); // encontrar 'c'
-    int d = charToint(G->V[0])+charToint(G->V[1]*10); // encontrar 'd'
+    int a = charToInt(F->V[2]); // encontrar 'a'
+    int b = charToInt(F->V[0])+charToInt(F->V[1])*10; // encontrar 'b'
+    int c = charToInt(G->V[2]); // encontrar 'c'
+    int d = charToInt(G->V[0])+charToInt(G->V[1]*10); // encontrar 'd'
     int ac = a*c; // calcular 'ac'
     int bd = b*d; // calcular 'bd'
     int x = (a+b)*(c+d); // calcular 'x'
@@ -201,8 +201,8 @@ void subtrair(fator *F,fator *G,fator *H){ // F-G
         padronizar(H, F->n);
     }
         for(int i = 0; i < F->n; i++){
-            int a = charToint(F->V[i]);
-            int b = charToint(G->V[i]);
+            int a = charToInt(F->V[i]);
+            int b = charToInt(G->V[i]);
             int r = a-b;
             if(r >= 0){
                 H->V[i] = intToChar(r);            
@@ -217,7 +217,7 @@ void subtrair(fator *F,fator *G,fator *H){ // F-G
 int cadeiaToInt(fator *F){
     int acm = 0;
     for(int i = 0; i < F->n; i++){
-        acm+= charToint((int) F->V[i])*pow(10,i);
+        acm+= charToInt((int) F->V[i])*pow(10,i);
     }
     return acm;
 }
@@ -245,9 +245,9 @@ void somar(fator *F,fator *G,fator *H){
     }
     for(int i = 0; i < F->n; i++){
         
-        int a = charToint(F->V[i]);
-        int b = charToint(G->V[i]);
-        int c = charToint(H->V[i]);
+        int a = charToInt(F->V[i]);
+        int b = charToInt(G->V[i]);
+        int c = charToInt(H->V[i]);
         H->V[i] = intToChar((a+b+c)%10);
         H->V[i+1] = intToChar((int)floor((a+b+c)/10));
     }
