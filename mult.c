@@ -10,6 +10,7 @@ typedef struct produto{
     char d;
     char c;
 }produto;
+void intTocadeia(int n, fator *F);
 int contarDigitos(int a);
 int cadeiaToInt(fator *F);
 char intToChar(int i);
@@ -104,8 +105,8 @@ void casoBase(fator *F,fator *G,fator *H){
     assert(F->n + G->n <= 8);
     int f = cadeiaToInt(F);
     int g = cadeiaToInt(G);
-    int digitos = contarDigitos(f*g);
-    printf("%d\n", f*g);
+    int c = f*g;
+    intTocadeia(c, H);
     return;
 }
 void casoBase2(fator *F,fator *G,fator *H){
@@ -205,28 +206,34 @@ int cadeiaToInt(fator *F){
     }
     return acm;
 }
+void intTocadeia(int n, fator *F){
+    padronizar(F, contarDigitos(n));
+
+    for(int i = 0; i < F->n; i++){
+            int d =  (n % (int)pow(10,i+1))/pow(10,i);
+            F->V[i] = intToChar(d);
+        }
+}
+
+int maior(int a, int b){
+    if(a > b){
+        return a;
+    }else{
+        return b;
+    }
+    return 0;
+}
 void somar(fator *F,fator *G,fator *H){
     //deixar os fatores F e G com o mesmo número de dígitos e o tamanho de H excedendo o tamanho de F em 1
-    
-    if(F->n == G->n){
-        if(H->n != F->n+1){
-            padronizar(H, F->n+1);
-        }
-    }
-    if(F->n > G->n){
-        padronizar(G, F->n);
-        padronizar(H, F->n+1);
-    }else{
-        padronizar(F, G->n);
-        padronizar(H, F->n+1);
-    }
-    if(F->n<=2){
+
+    if(F->n + G->n <= 8){
         int a = cadeiaToInt(F);
         int b = cadeiaToInt(G);
-        if(a+b <= 99){
-            padronizar(H, 2);
-        }
+        int c = a + b;
+        intTocadeia(c, H);
+        return;
     }
+    padronizar(H, maior(F->n,G->n)+1);
     for(int i = 0; i < F->n; i++){
         
         int a = charToInt(F->V[i]);
@@ -250,18 +257,11 @@ void mult_div_conq(fator *F,fator *G,fator *H){
     //printFull(G);
     //printf("\n");
 //deixar os fatores F e G com o mesmo número de dígitos e H com o dobro de F
-/*    if(F->n == 1 && G->n == 1){
-        assert(F->n == 1);
-        assert(G->n == 1);
-        padronizar(H, 1);
-        assert(H->n == 1);
-        int a = charToInt(F->V[0]); // encontrar 'a'
-        int b = charToInt(G->V[0]); // encontrar 'b'
-        int c = a*b;
-        if(c <=9){
-            H->V[0] = intToChar(c);
-            return;
-        }
+
+    //Caso base
+    if(F->n + G->n <= 8){
+        casoBase(F, G, H);
+        return;
     }
 
     if(F->n == G->n){
@@ -274,25 +274,24 @@ void mult_div_conq(fator *F,fator *G,fator *H){
         }
         padronizar(H, 2*F->n);
     }
-*/
-    //Caso base
-    if(F->n + G->n <= 8){
-        casoBase(F, G, H);
-        return;
-    }
           
     fator *A = newFator(1);
     fator *B = newFator(1);
     fator *C = newFator(1);
     fator *D = newFator(1);
     divide(F, A, B);
+   
     divide(G, C, D);
+    printf("A\n");
+    print(A);
+    printf("B\n");
+    print(B);
     fator *AC = newFator(1);
     // calcular 'AC'
     mult_div_conq(A, C, AC);
     fator *BD = newFator(1);
     // calcular 'BD'
-    mult_div_cornq(B, D, BD);
+    mult_div_conq(B, D, BD);
     //Soma A+B
     fator *AmaisB = newFator(1);
     somar(A, B, AmaisB);
@@ -331,6 +330,7 @@ void mult_div_conq(fator *F,fator *G,fator *H){
     liberar(E1);
     liberar(E2);
     liberar(R1);
+    return;
 }
 int main(){
     int n;
@@ -361,7 +361,7 @@ int main(){
     //somar(F, G, H);
     //subtrair(F,G,H);
     //printFull(F);
-    //print(H);
+    print(H);
 
     return 0;
 }
