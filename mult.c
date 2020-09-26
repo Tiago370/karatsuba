@@ -45,7 +45,7 @@ void divide(fator* F, fator* A, fator* B){
     //assert(F->n == B->n*2);
     
     if(F->n%2 == 1){
-        padronizar(A, ceil(F->n/2));
+        padronizar(A, floor(F->n/2)+1);
         padronizar(B, floor(F->n/2));
     }else{
         padronizar(A, F->n/2);
@@ -106,6 +106,7 @@ void casoBase(fator *F,fator *G,fator *H){
     int f = cadeiaToInt(F);
     int g = cadeiaToInt(G);
     int c = f*g;
+    printf("Fazendo %d * %d = %d", f, g, c);
     intTocadeia(c, H);
     return;
 }
@@ -202,7 +203,7 @@ void subtrair(fator *F,fator *G,fator *H){ // F-G
 int cadeiaToInt(fator *F){
     int acm = 0;
     for(int i = 0; i < F->n; i++){
-        acm+= charToInt((int) F->V[i])*pow(10,i);
+        acm+= (int)charToInt(F->V[i])*pow(10,i);
     }
     return acm;
 }
@@ -283,9 +284,14 @@ void mult_div_conq(fator *F,fator *G,fator *H){
    
     divide(G, C, D);
     printf("A\n");
-    print(A);
+    printFull(A);
     printf("B\n");
-    print(B);
+    printFull(B);
+    printf("C\n");
+    printFull(C);
+    printf("D\n");
+    printFull(D);
+
     fator *AC = newFator(1);
     // calcular 'AC'
     mult_div_conq(A, C, AC);
